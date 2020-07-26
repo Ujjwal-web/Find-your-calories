@@ -1,0 +1,161 @@
+ <!DOCTYPE html>
+ <html lang="en" dir="ltr">
+
+ <head>
+   <meta charset="utf-8">
+   <title></title>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+
+   <!-- Favicons -->
+   <link rel="apple-touch-icon" href="/docs/4.5/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+   <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+   <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+   <link rel="manifest" href="/docs/4.5/assets/img/favicons/manifest.json">
+   <link rel="mask-icon" href="/docs/4.5/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
+   <link rel="icon" href="/docs/4.5/assets/img/favicons/favicon.ico">
+   <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
+   <meta name="theme-color" content="#563d7c">
+
+ </head>
+
+ <body>
+   <link rel="stylesheet" href="css\styles.css">
+
+   <nav class="navbar navbar-expand-lg fixed-top  topp" style="color : black;font-size:30px;">
+     <a class="navbar-brand mainheading" style="color : black;font-size:35px;" href="#">Find your Calories</a>
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+
+     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+       <ul class="navbar-nav mr-auto">
+         <li class="nav-item active">
+           <a class="nav-link" style="font-size:30px;" href="/">Home <span class="sr-only">(current)</span></a>
+         </li>
+         <li class="nav-item dropdown">
+           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             Explore
+           </a>
+           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+             <a class="dropdown-item" href="#">About</a>
+             <a class="dropdown-item" href="#">Contact</a>
+             <div class="dropdown-divider"></div>
+             <a class="dropdown-item" href="#">Suggestions</a>
+           </div>
+         </li>
+       </ul>
+     </div>
+     <div class="counter">
+       <h1 class="counter"><mark>Calories count : <%= counter %> cal</mark></h1>
+     </div>
+     <br>
+     <div class="">
+       <form class="" action="/clear" method="post">
+         <button type="submit" type="button" class="btn btn-outline-success my-2 my-sm-0 clear">Clear</button>
+       </form>
+     </div>
+
+   </nav>
+
+   <div class="box" id="heading">
+     <h1><%= todaydate %></h1>
+   </div>
+
+   <div class="container-fluid" id="new">
+     <!--  -------------------------------------------------------------------------------------------------------------->
+
+
+     <div class="row combox">
+
+       <!-- showing items -->
+       <div class="col-sm-6 newbox">
+         <h3>
+           <p class="text-muted">ITEMS</p>
+         </h3>
+         <%  newitem.forEach(function(item){ %>
+         <%  if (item.name != ""){ %>
+         <% var x = item.name %>
+         <form class="" action="/delete" method="post">
+           <div class="item">
+             <input type="checkbox" name="third" value="<%= item.id %>" onchange="this.form.submit()">
+            <p><%= item.quants %> <%= item.unt %>  <%= item.name %></p>
+
+           </div>
+           <input type="hidden" name="forth" value="<%= kindofday%>"></input>
+           <input type="hidden" name="fifth" value="<%= item.calvl%>"></input>
+         </form>
+         <%  } %>
+         <% }) %>
+
+       </div>
+       <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
+       <!--showing calories -->
+       <div class="col-sm-6 newbox">
+         <h3>
+           <p class="text-muted">CALORIES</p>
+         </h3>
+         <%  newitem.forEach(function(item){ %>
+         <%  if (item.name != ""){ %>
+         <form class="" action="/" method="post">
+           <div class="item">
+             <p><%= item.calvl %></p>
+           </div>
+           <input type="hidden" name="forth" value="<%= kindofday%>"></input>
+         </form>
+
+         <%  } %>
+         <% }) %>
+       </div>
+     </div>
+   </div>
+   <div class="newbox2">
+
+
+     <form class="item addspace search" action="/" method="post">
+
+       <input type="text" class="form-control additem" name="second" placeholder="Add Items" autocomplete="off">
+       <div class="form-group unit">
+         <label for="exampleFormControlSelect1">Unit</label>
+         <select class="form-control" id="exampleFormControlSelect1" name="unit">
+           <option>Large</option>
+           <option>Medium</option>
+           <option>Small</option>
+           <option>Ounce</option>
+           <option>Gram</option>
+           <option>Pound</option>
+           <option>Kilogram</option>
+           <option>Pinch</option>
+           <option>Liter</option>
+           <option>Gallon</option>
+           <option>Pint</option>
+           <option>Quart</option>
+           <option>Milliliter</option>
+           <option>Drop</option>
+           <option>Cup</option>
+           <option>Tablespoon</option>
+           <option>Teaspoon</option>
+           <option>Fluid ounce</option>
+         </select>
+       </div>
+       <input type="text" class="form-control quantity" name="quantity" placeholder="Quantity" autocomplete="off">
+
+
+       <button type="submit" class="btn btn-lg btn-outline-secondary btn-warning" name="list" value="<%=kindofday%>">+</button>
+
+
+     </form>
+   </div>
+   <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+     <div class="container text-center">
+       <small>Copyright <%= kindofyear %></small>
+     </div>
+   </footer>
+
+ </body>
+
+ </html>
